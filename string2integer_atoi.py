@@ -26,7 +26,7 @@ class Solution:
             return INT_MAX
         return res
 
-    # accepted but slow
+    # accepted -- roughly same
     def _myAtoi(self, s: str) -> int:
         start, end = 0, len(s)-1
         res, positive, start_value = 0, True, False
