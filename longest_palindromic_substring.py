@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/longest-palindromic-substring/
 class Solution:
     # curr best version
     def longestPalindrome(self, s: str) -> str:
