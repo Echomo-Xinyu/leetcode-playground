@@ -1,7 +1,20 @@
 # https://leetcode.com/problems/reverse-integer/description/
 class Solution:
-    # slightly faster
+    # get rid of the stack
     def reverse(self, x: int) -> int:
+        if x < 0:
+            return -1 * self.reverse(-1 * x)
+        res = 0
+        while x > 0:
+            res = res * 10 + x % 10
+            x //= 10
+        if -2**31 <= res <= 2**31-1:
+            return res
+        else:
+            return 0
+
+    # slightly faster
+    def _2reverse(self, x: int) -> int:
         if x < 0:
             return -1 * self.reverse(-1 * x)
 
