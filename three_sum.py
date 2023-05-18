@@ -1,7 +1,55 @@
 # https://leetcode.com/problems/3sum/
 from typing import List
+# TODO
 
 class Solution:
+    # probably the limit of this approach -- still not as good as 2nd attempt based on 2sum two pointer
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        count = {}
+        for i, num in enumerate(nums):
+            if num not in count:
+                count[num] = 0
+            count[num] += 1
+        
+        res = set()
+        calculated = set()
+        n = len(nums)
+        for i in range(n):
+            for j in range(i+1, n):
+                if (nums[i], nums[j]) in calculated:
+                    continue
+                target = 0 - nums[i] - nums[j]
+                if target in count:
+                    num_val = count[target]
+                    # hardcode check about whether (num[i], num[j], target) are valid
+                    if (num_val >= 3) or ((nums[i] != target or nums[j] != target) and num_val >= 2) or (nums[i] != target and nums[j] != target and num_val >= 1):
+                        a, b, c = nums[i], nums[j], target
+                        if a <= b:
+                            if b <= c:
+                                temp = (a, b, c)
+                            else:
+                                if a <= c:
+                                    temp = (a, c, b)
+                                else:
+                                    temp = (c, a, b)
+                        else: # b < a
+                            if a <= c:
+                                temp = (b, a, c)
+                            else:
+                                if b <= c:
+                                    temp = (b, c, a)
+                                else:
+                                    temp = (c, b, a)
+                        res.add(temp)
+                        calculated.add((temp[0], temp[1]))
+                        calculated.add((temp[1], temp[0]))
+                        calculated.add((temp[1], temp[2]))
+                        calculated.add((temp[2], temp[1]))
+                        calculated.add((temp[0], temp[2]))
+                        calculated.add((temp[2], temp[0]))
+
+        return list(res)
+    
     # 2sum two pointer approach upgrade
     def _2threeSum(self, nums: List[int]) -> List[List[int]]:
         res = []
