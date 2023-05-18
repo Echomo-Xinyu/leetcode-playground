@@ -3,8 +3,41 @@ from typing import List
 # TODO
 
 class Solution:
-    # probably the limit of this approach -- still not as good as 2nd attempt based on 2sum two pointer
+    # further analysis of three sum attribute
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res = set()
+        neg, pos, zero = [], [], 0
+        for num in nums:
+            if num == 0:
+                zero += 1
+            elif num < 0:
+                neg.append(num)
+            else: # num > 0
+                pos.append(num)
+        neg_set, pos_set = set(neg), set(pos)
+        neg.sort()
+        pos.sort()
+        if zero:
+            if zero >= 3:
+                res.add((0, 0, 0))
+            for item in neg_set:
+                if -1 * item in pos_set:
+                    res.add((item, 0, -1*item))
+        
+        for i in range(len(neg)):
+            for j in range(i+1, len(neg)):
+                target = 0 - neg[i] - neg[j]
+                if target in pos_set:
+                    res.add((neg[i], neg[j], target))
+        for i in range(len(pos)):
+            for j in range(i+1, len(pos)):
+                target = 0 - pos[i] - pos[j]
+                if target in neg_set:
+                    res.add((pos[i], pos[j], target))
+        return res
+
+    # probably the limit of this approach -- still not as good as 2nd attempt based on 2sum two pointer
+    def _3threeSum(self, nums: List[int]) -> List[List[int]]:
         count = {}
         for i, num in enumerate(nums):
             if num not in count:
