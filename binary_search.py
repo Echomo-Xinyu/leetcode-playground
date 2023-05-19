@@ -10,7 +10,7 @@ class Solution:
                 l = mid + 1
             else: # nums[mid] > target
                 h = mid - 1
-            print(l, h, mid)
+            # print(l, h, mid)
         return -1
 
 # print(Solution().search([-1,0,3,5,9,12], 9))
