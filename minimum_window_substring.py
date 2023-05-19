@@ -3,6 +3,41 @@
 from collections import Counter
 
 class Solution:
+    # self-attempted after reading answer
+    def minWindow(self, s: str, t: str) -> str:
+        m, n = len(s), len(t)
+        if m == 0 or n == 0 or m < n:
+            return ""
+        t_dict = Counter(t)
+        target = len(t_dict)
+
+        curr_dict = {}
+        formed = 0
+        min_length, start, end = 10**5+1, 0, 0
+        l, r = 0, 0
+        while r < m:
+            curr_char = s[r]
+            if curr_char in t_dict:
+                curr_dict[curr_char] = curr_dict.get(curr_char, 0) + 1
+                if curr_dict[curr_char] == t_dict[curr_char]:
+                    formed += 1
+            # found a valid window from start to r, now shrink l
+            while l <= r and formed == target:
+                curr_char = s[l]
+                if curr_char in t_dict:
+                    curr_dict[curr_char] -= 1
+                    if curr_dict[curr_char] < t_dict[curr_char]:
+                        formed -= 1
+                        curr_length = r - l + 1
+                        if curr_length < min_length:
+                            min_length, start, end = curr_length, l, r
+                l += 1
+            r += 1
+        if min_length == 10**5+1:
+            return ""
+        return s[start:end+1]
+
+class Solution1:
     def minWindow(self, s: str, t: str) -> str:
         if not t or not s:
             return ""
