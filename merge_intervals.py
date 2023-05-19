@@ -6,6 +6,8 @@ class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         if not intervals:
             return []
+        # anothe way of writing below:
+        # sorted_intervals = sorted(intervals, key=lambda x: x[0])
         sorted_intervals = sorted(intervals, key=cmp_to_key(lambda x, y: x[0] - y[0]))
         res = []
         curr = sorted_intervals[0]
