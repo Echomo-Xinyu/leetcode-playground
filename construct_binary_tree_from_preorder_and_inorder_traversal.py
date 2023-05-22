@@ -8,7 +8,31 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def buildTree(self, preorder: list[int], inorder: list[int]) -> Optional[TreeNode]:
+    # complicated approach
+    def _3buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        preorder_node = []
+        val2index_inorder = {}
+        for val in preorder:
+            preorder_node.append(TreeNode(val))
+        for i, val in enumerate(inorder):
+            inorder[val] = i
+        frontier = [preorder_node[0]]
+        for i in range(1, len(preorder)):
+            l1, l2 = val2index_inorder[preorder[i-1]], val2index_inorder[preorder[i]]
+            if l2 < l1:
+                preorder_node[i-1].left = preorder_node[i]
+                frontier.append(preorder_node[i])
+            else:
+                curr = frontier.pop()
+                while frontier:
+                    if val2index_inorder[frontier[-1].val] > l2 and val2index_inorder[curr.val] < l2:
+                        break
+                    curr = frontier.pop()
+                curr.right = preorder_node[i]
+                frontier.append(preorder_node[i])
+        return preorder_node[0]
+    # concise way of writing 1 but can be faster -- slice is costy leading to O(n^2) in total
+    def _2buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if inorder:
             ind = inorder.index(preorder.pop(0))
             root = TreeNode(inorder[ind])
@@ -17,7 +41,7 @@ class Solution:
             root.right = self.buildTree(preorder, inorder[ind+1:])
             return root
     # accepted but slow and long
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    def _1buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if len(preorder) == 0:
             return None
         if len(preorder) == 1:
