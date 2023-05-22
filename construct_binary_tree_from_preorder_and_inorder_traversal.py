@@ -8,6 +8,25 @@ class TreeNode:
         self.right = right
 
 class Solution:
+    # rewrite approach using pointer + recursion with O(n) time complexity
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        val2index_inorder = {}
+        for i, val in enumerate(inorder):
+            val2index_inorder[val] = i
+        def _buildTree(preindex: int, inleft: int, inright: int) -> Optional[TreeNode]:
+            if inleft <= inright:
+                ind = val2index_inorder[preorder[preindex]]
+                preindex += 1
+                root = TreeNode(inorder[ind])
+                pair = _buildTree(preindex, inleft, ind-1)
+                if pair:
+                    root.left, preindex = pair
+                pair = _buildTree(preindex, ind+1, inright)
+                if pair:
+                    root.right, preindex = pair
+                return root, preindex
+        return _buildTree(0, 0, len(inorder)-1)[0]
+
     # complicated approach
     def _3buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         preorder_node = []
@@ -31,6 +50,7 @@ class Solution:
                 curr.right = preorder_node[i]
                 frontier.append(preorder_node[i])
         return preorder_node[0]
+
     # concise way of writing 1 but can be faster -- slice is costy leading to O(n^2) in total
     def _2buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if inorder:
@@ -40,6 +60,7 @@ class Solution:
             # this is achieved as the ones in left subtree has been popped already
             root.right = self.buildTree(preorder, inorder[ind+1:])
             return root
+
     # accepted but slow and long
     def _1buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if len(preorder) == 0:
