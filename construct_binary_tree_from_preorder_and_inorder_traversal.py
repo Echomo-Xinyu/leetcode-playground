@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+# TODO
 from typing import List, Optional
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -7,6 +8,15 @@ class TreeNode:
         self.right = right
 
 class Solution:
+    def buildTree(self, preorder: list[int], inorder: list[int]) -> Optional[TreeNode]:
+        if inorder:
+            ind = inorder.index(preorder.pop(0))
+            root = TreeNode(inorder[ind])
+            root.left = self.buildTree(preorder, inorder[0:ind])
+            # this is achieved as the ones in left subtree has been popped already
+            root.right = self.buildTree(preorder, inorder[ind+1:])
+            return root
+    # accepted but slow and long
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if len(preorder) == 0:
             return None
