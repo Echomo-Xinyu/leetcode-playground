@@ -6,7 +6,18 @@ class ListNode:
         self.next = None
 
 class Solution:
+    # both are valid and fast methods but first looks more interesting
     def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                return True
+        return False
+
+    def _hasCycle(self, head: Optional[ListNode]) -> bool:
         mem = set()
         while head:
             if head in mem:
