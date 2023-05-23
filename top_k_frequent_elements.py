@@ -1,7 +1,18 @@
 # https://leetcode.com/problems/top-k-frequent-elements/
 from typing import List
+from collections import defaultdict
+import heapq
 
 class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = defaultdict(0)
+        for num in nums:
+            counter[num] += 1
+        heap = []
+        for key, v in counter.items():
+            heapq.heappush(heap, (v, key))
+        return [tu[1] for tu in heapq.nlargest(k, heap)]
+
     # based on hash map
     def _topKFrequent(self, nums: List[int], k: int) -> List[int]:
         counter = {}
@@ -18,3 +29,4 @@ class Solution:
         for i in range(k):
             res.append(sorted_data[i][0])
         return res
+        # return [tu[0] for tu in sorted_data[:k]]
