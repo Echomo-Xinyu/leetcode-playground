@@ -7,8 +7,8 @@ class TreeNode:
         self.right = right
 
 class Solution:
-
     # note the check for len(), but not robust to change to BST
+    # when updating, maintain a LRU Cache-like structure to store node's predecessor and successor
     def _1kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         sorted_data = []
         def _inorder(curr: Optional[TreeNode], k: int) -> None:
