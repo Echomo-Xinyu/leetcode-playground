@@ -7,13 +7,14 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    # naive solution, not fast enough
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+
+    # note the check for len(), but not robust to change to BST
+    def _1kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         sorted_data = []
-        def _inorder(curr: Optional[TreeNode]) -> None:
-            if curr:
-                _inorder(curr.left)
+        def _inorder(curr: Optional[TreeNode], k: int) -> None:
+            if curr and len(sorted_data) < k:
+                _inorder(curr.left, k)
                 sorted_data.append(curr.val)
-                _inorder(curr.right)
-        _inorder(root)
+                _inorder(curr.right, k)
+        _inorder(root, k)
         return sorted_data[k-1]
