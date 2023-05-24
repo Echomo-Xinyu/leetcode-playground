@@ -2,7 +2,22 @@
 from typing import List
 
 class Solution:
+    # O(1)
     def productExceptSelf(self, nums: List[int]) -> List[int]:
+        res = [1 for _ in nums]
+        temp_prod = 1
+        n = len(nums)
+        for i in range(1, n):
+            temp_prod *= nums[i-1]
+            res[i] *= temp_prod
+        temp_prod = 1
+        for i in range(n-2, -1, -1):
+            temp_prod *= nums[i+1]
+            res[i] *= temp_prod
+        return res
+
+    # accepted but space complexity not O(1)
+    def _1productExceptSelf(self, nums: List[int]) -> List[int]:
         prefix, suffix = [1 for _ in nums], [1 for _ in nums]
         n = len(nums)
         prefix[0] = nums[0]
