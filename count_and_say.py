@@ -9,9 +9,9 @@ class Solution:
                 if res[i] == curr:
                     num += 1
                 else:
-                    new_res.append(str(num) + str(curr))
+                    new_res += str(num) + str(curr)
                     curr = res[i]
                     num = 1
-            new_res.append(str(num) + str(curr))
+            new_res += str(num) + str(curr)
             res = new_res
         return res
