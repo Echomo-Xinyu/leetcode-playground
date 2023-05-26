@@ -1,6 +1,28 @@
 # https://leetcode.com/problems/divide-two-integers/
+# TODO
 
 class Solution:
+    def divide(self, dividend: int, divisor: int) -> int:
+        sign = 1
+        if dividend == 0:
+            return 0
+        if (dividend < 0 and divisor > 0) or (dividend > 0 and divisor < 0):
+            sign = -1
+        dividend, divisor = abs(dividend), abs(divisor)
+        res = 0
+        while dividend >= divisor:
+            temp = divisor
+            factor = 1
+            while (divisor << 1) <= dividend:
+                temp <<= 1
+                factor <<= 1
+            dividend -= temp
+            res += factor
+        res = sign * res
+        # more concise way than below
+        return min(2**31-1, max(-2**31, res))
+
+        return
     # hack way, not correct way to solve
     def _2divide(self, dividend: int, divisor: int) -> int:
         if dividend == -231 and divisor == 3:
