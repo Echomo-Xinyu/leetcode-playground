@@ -22,7 +22,6 @@ class Solution:
         # more concise way than below
         return min(2**31-1, max(-2**31, res))
 
-        return
     # hack way, not correct way to solve
     def _2divide(self, dividend: int, divisor: int) -> int:
         if dividend == -231 and divisor == 3:
