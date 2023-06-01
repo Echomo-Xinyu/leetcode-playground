@@ -1,6 +1,15 @@
 # https://leetcode.com/problems/unique-paths/
+# TODO
 
 class Solution:
+    # compressed dp
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp=[1]*n
+        for i in range(1,m):
+            for j in range(1,n):
+                dp[j] += dp[j - 1]
+        return dp[n-1]
+
     # basic solution
     def _1uniquePaths(self, m: int, n: int) -> int:
         count = [[0 for _ in range(n)] for _ in range(m)]
