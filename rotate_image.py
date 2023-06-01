@@ -2,6 +2,27 @@
 from typing import List
 
 class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        if not matrix: return
+        # rows == cols
+        rows, cols = len(matrix), len(matrix[0])
+        
+        # transpose the matrix
+        for i in range(rows):
+            # ignore the first element
+            for j in range(i + 1, cols):
+                # swap the rth row and rth col
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j] 
+
+        # reflect the matrix
+        mid = cols // 2
+        for j in range(mid):
+            for i in range(rows):
+                matrix[i][j], matrix[i][cols - 1 - j] = matrix[i][cols - 1 - j], matrix[i][j]
+
     # accepted but space consuming and possibly not fast enough
     def _1rotate(self, matrix: List[List[int]]) -> None:
         """
