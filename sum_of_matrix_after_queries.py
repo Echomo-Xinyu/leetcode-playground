@@ -2,6 +2,23 @@
 from typing import List
 
 class Solution:
+    def matrixSumQueries(self, n: int, queries: List[List[int]]) -> int:
+        rowCounted, colCounted = [False for _ in range(n)], [False for _ in range(n)]
+        numRowRemain, numColRemain = n, n
+        res = 0
+        for i in range(len(queries)-1, -1, -1):
+            query = queries[i]
+            t, index, val = query
+            if t == 0 and rowCounted[index] == False:
+                res += numColRemain * val
+                rowCounted[index] = True
+                numRowRemain -= 1
+            elif t == 1 and colCounted[index] == False:
+                res += numRowRemain * val
+                colCounted[index] = True
+                numColRemain -= 1
+        return res
+
     # correct but not fast enough, rejected
     def _1matrixSumQueries(self, n: int, queries: List[List[int]]) -> int:
         # (value, time)
