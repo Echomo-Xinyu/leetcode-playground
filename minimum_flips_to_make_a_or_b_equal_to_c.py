@@ -1,6 +1,11 @@
 # https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/
 
 class Solution:
+    # add pure bit-wise operations
+    def minFlips(self, a: int, b: int, c: int) -> int:
+        count = lambda x : bin(x).count('1')
+        return count((a | b) ^ c) + count(a & b & ~c)
+
     # add simplified way of writing
     def _2minFlips(self, a: int, b: int, c: int) -> int:
         res = 0
