@@ -35,6 +35,6 @@ class Solution:
             return res % mod
 
         mod = 10**9 + 7
-        res = digitDP(num2,minSum,maxSum) 
-        res -= digitDP(str(int(num1)-1),minSum,maxSum)
+        res = digitDP(num2,min_sum,max_sum) 
+        res -= digitDP(str(int(num1)-1), min_sum, max_sum)
         return res % mod
