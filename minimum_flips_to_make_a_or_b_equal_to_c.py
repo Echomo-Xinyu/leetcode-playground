@@ -1,7 +1,21 @@
 # https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/
 
 class Solution:
-    def minFlips(self, a: int, b: int, c: int) -> int:
+    # add simplified way of writing
+    def _2minFlips(self, a: int, b: int, c: int) -> int:
+        res = 0
+        while a or b or c:
+            if c & 1:
+                if not ((a & 1) or (b & 1)):
+                    res += 1
+            else:
+                res += (a & 1) + (b & 1)
+            a >>= 1
+            b >>= 1
+            c >>= 1
+        return res
+
+    def _1minFlips(self, a: int, b: int, c: int) -> int:
         res = 0
         while (a > 0 or b > 0) and c > 0:
             a_digit, b_digit, c_digit = a % 2, b % 2, c % 2
