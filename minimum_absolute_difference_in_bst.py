@@ -8,7 +8,23 @@ class TreeNode:
         self.right = right
 
 class Solution:
+    # integrate value check into in-order traversal
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
+        global out, prev
+        out = float("inf")
+        prev = float("-inf")
+        # inorder traversal
+        def traverse(cur):
+            global out, prev
+            if cur.left:
+                traverse(cur.left)
+            out, prev = min(out, cur.val - prev), cur.val
+            if cur.right:
+                traverse(cur.right)
+        traverse(root)
+        return out
+    # accepted but can be slightly improved
+    def _1getMinimumDifference(self, root: Optional[TreeNode]) -> int:
         res = []
         def _inorder_traversal(root: Optional[TreeNode], res: List[int]):
             if root:
