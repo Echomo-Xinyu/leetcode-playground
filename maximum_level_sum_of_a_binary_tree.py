@@ -5,6 +5,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+# TODO: good practice
 
 class Solution:
     # BFS, calculate sum by level
