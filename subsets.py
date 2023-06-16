@@ -1,7 +1,24 @@
 # https://leetcode.com/problems/subsets/
 from typing import List
+#TODO
 
 class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        def subset(index, curr_list):
+            if i == len(nums):
+                curr = curr_list.copy()
+                res.append(curr)
+                return
+            # search without ith element
+            subset(i+1, curr_list)
+            # search with ith element
+            curr_list.append(nums[i])
+            subset(i+1, curr_list)
+            curr_list.pop()
+        subset(0, [])
+        return res
+
     # accepted but slow approach
     def _2subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
