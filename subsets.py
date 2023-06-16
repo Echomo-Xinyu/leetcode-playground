@@ -18,6 +18,13 @@ class Solution:
             curr_list.pop()
         subset(0, [])
         return res
+    
+    def _3subset(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            for val in res:
+                res += [val + [num]]
+        return res
 
     # accepted but slow approach
     def _2subsets(self, nums: List[int]) -> List[List[int]]:
