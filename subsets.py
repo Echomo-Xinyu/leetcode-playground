@@ -2,6 +2,19 @@
 from typing import List
 
 class Solution:
+    # accepted but slow approach
+    def _2subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        def search(curr: List[int], nums: List[bool], index: int, isFirst: bool):
+            if index == len(nums):
+                return
+            if isFirst:
+                res.append(curr)
+            search(curr, nums, index+1, False)
+            search(curr + [nums[index]], nums, index+1, True)
+        search([], nums, -1, True)
+        return res
+
     # approach below fails
     def _1subsets(self, nums: List[int]) -> List[List[int]]:
         res = set('')
