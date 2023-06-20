@@ -3,26 +3,25 @@ from typing import List
 #TODO
 
 class Solution:
-    def exist(self, board: List[List[int]], word: str) -> bool:
-        if not board:
-            return False
-        for i in range(len(board)):
-            for j in range(len(borad[0])):
-                if dfs(board, i, j, word):
-                    return True
-        return False
-    
-    def dfs(board, i, j, word):
+    def dfs(self, board, i, j, word):
         if len(word) == 0:
-            retur True
-        if i < 0 or i >= len(board) or j < 0 or j > len(board[0]) or word[0] != board[i][j]:
+            return True
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or word[0] != board[i][j]:
             return False
         tmp = board[i][j]
         board[i][j] = "#"
         w = word[1:]
-        res = dfs(board, i+1, j, w) or dfs(board, i-1, j, w) or dfs(board, i, j-1, w) or dfs(board, i, j+1, w)
-        board[i][j] = temp
+        res = self.dfs(board, i+1, j, w) or self.dfs(board, i-1, j, w) or self.dfs(board, i, j-1, w) or self.dfs(board, i, j+1, w)
+        board[i][j] = tmp
         return res
+    def exist(self, board: List[List[int]], word: str) -> bool:
+        if not board:
+            return False
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if self.dfs(board, i, j, word):
+                    return True
+        return False
 
 
 
