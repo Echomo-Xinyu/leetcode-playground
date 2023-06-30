@@ -10,6 +10,8 @@ class Solution:
         for num in nums:
             curr += num
             prefix_sum.append(curr)
-        for i in range(k, n-k):
-            res[i] = (prefix_sum[i+k] - prefix_sum[i-k]) // (2*k)
+        if k+k < n:
+            res[k] = (prefix_sum[k+k]) // (2*k+1)
+        for i in range(k+1, n-k):
+            res[i] = (prefix_sum[i+k] - prefix_sum[i-k-1]) // (2*k+1)
         return res
