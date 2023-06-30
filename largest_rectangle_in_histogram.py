@@ -72,5 +72,18 @@ class Solution:
             area = (lessThanRight[i] - lessThanLeft[i] - 1) * heights[i]
             max_area = max(max_area, area)
         return max_area
-
+    # add an elegant solution
+    # the first appended 0 will ensure all values are popped out eventually
+    def _3largestRectangleArea(self, height):
+        height.append(0)
+        stack = [-1]
+        ans = 0
+        for i in xrange(len(height)):
+            while height[i] < height[stack[-1]]:
+                h = height[stack.pop()]
+                w = i - stack[-1] - 1
+                ans = max(ans, h * w)
+            stack.append(i)
+        height.pop()
+        return ans
 # print(Solution().largestRectangleArea([2,1,5,6,2,3]))
