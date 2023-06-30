@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/largest-rectangle-in-histogram/
 from typing import List
+# TODO
 
 class Solution:
     # try to add each number into the histogram and compute the possible size of rectangle with the new number -- with rough estimation gonna TLE thus abandoned
@@ -51,5 +52,25 @@ class Solution:
                     next_rs_placeholder.append(next_r)
             rs = next_rs_placeholder
         return max_value
+    # inspired by others
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        max_area = 0
+        n = len(heights)
+        lessThanLeft = [0] * n
+        lessThanRight = [0] * n
+        for i in range(n):
+            p = i - 1
+            while p >= 0 and heights[p] >= heights[i]:
+                p = lessThanLeft[p]
+            lessThanLeft[i] = p
+        for i in range(n-1, -1, -1):
+            p = i + 1
+            while p < n and heights[p] >= heights[i]:
+                p = lessThanRight[p]
+            lessThanRight[i] = p
+        for i in range(n):
+            area = (lessThanRight[i] - lessThanLeft[i] - 1) * heights[i]
+            max_area = max(max_area, area)
+        return max_area
 
 # print(Solution().largestRectangleArea([2,1,5,6,2,3]))
